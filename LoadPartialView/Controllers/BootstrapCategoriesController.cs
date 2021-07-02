@@ -1,7 +1,6 @@
-﻿using System;
+﻿using LoadPartialView.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace LoadPartialView.Controllers
@@ -9,10 +8,10 @@ namespace LoadPartialView.Controllers
     public class BootstrapCategoriesController : Controller
     {
         // GET: BootstrapCategories
-        public ActionResult Delete(string bpCategoriesId)
+        public ActionResult Delete(List<BPCategory> bpCategories, string bpCategoryId)
         {
-            
-            return View(bpCategoriesId);
+            var bpCategory = bpCategories.FirstOrDefault(id => id.Id == bpCategoryId);
+            return View(bpCategory);
         }
     }
 }

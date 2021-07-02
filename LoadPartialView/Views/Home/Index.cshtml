@@ -1,17 +1,53 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model LoadPartialView.Models.TestViewModel
+
+@foreach (var item in Model.BPCategories)
+{
+    <p>
+        <button type="button" data-id="@item.Id" class="btn btn-outline-danger w-50" data-toggle="modal" data-target="#exampleModal">
+            Delete
+        </button>
+    </p>
 }
-<div class="row">
-    @{
-        Html.RenderPartial("Test");
-    }
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div id="modelLoad">
+                    <!--here I need to load my partial view with a model using JS-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section scripts {
-<script type="text/javascript">
+    <script type="text/javascript">
     $(function () {
-        console.log("GG")
+        var btns = document.querySelectorAll('[data-id]');
+
+        for (let btn of btns) {
+            btn.addEventListener('click', () => {
+                let bpCategoryId = btn.dataset['id'];
+                $("#modelLoad")
+                    .load('@Url.Action("Delete", "BootstrapCategories")', {
+                        bpCategories: JSON.parse('@Html.Raw(Json.Encode(Model.BPCategories))'),
+                        bpCategoryId: bpCategoryId
+                    });
+            });
+        }
     });
-</script>
+    </script>
 
 }

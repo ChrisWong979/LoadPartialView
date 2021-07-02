@@ -1,8 +1,5 @@
 ﻿using LoadPartialView.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace LoadPartialView.Controllers
@@ -11,7 +8,16 @@ namespace LoadPartialView.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var test = new TestViewModel
+            {
+                BPCategories = new List<BPCategory>
+                {
+                    new BPCategory { Id = "1", Name = "Foo", Description = "F for Foo" },
+                    new BPCategory { Id = "2", Name = "Bar", Description = "B for Bar" },
+                    new BPCategory { Id = "3", Name = "Hello World", Description = "DONE" },
+                }
+            };
+            return View(test);
         }
 
         public ActionResult About()
@@ -26,20 +32,6 @@ namespace LoadPartialView.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
-        }
-
-        public ActionResult Test()
-        {
-            var test = new TestViewModel
-            {
-                BPCategories = new List<BPCategory>
-                {
-                    new BPCategory { Id = "1" },
-                    new BPCategory { Id = "2" },
-                    new BPCategory { Id = "3" },
-                }
-            };
-            return View(test);
         }
     }
 }
