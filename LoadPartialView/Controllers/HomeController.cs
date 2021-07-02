@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LoadPartialView.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -25,6 +26,20 @@ namespace LoadPartialView.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Test()
+        {
+            var test = new TestViewModel
+            {
+                BPCategories = new List<BPCategory>
+                {
+                    new BPCategory { Id = "1" },
+                    new BPCategory { Id = "2" },
+                    new BPCategory { Id = "3" },
+                }
+            };
+            return View(test);
         }
     }
 }
